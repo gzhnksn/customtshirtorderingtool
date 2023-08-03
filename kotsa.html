@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        table, th, td {
+            border: 2px solid rgb(0, 0, 0);
+            background-color: wheat;
+        }
+        th {
+            text-align: center;
+        }
+td,
+span{
+    width: 150px;
+    background-color:white;
+}
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group2 label  {
+            display: inline-block;
+            width: 150px; 
+            text-align: left;
+        }
+
+
+        .input-group label {
+            display: inline-block;
+            width: 150px; 
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 300px; 
+        }
+        .input-group2 input {
+            width: 100px; 
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <form onsubmit="event.preventDefault();" id="reset">
+            <h1>Kişiye Özel Tişört Sipariş Aracı</h1>
+            <hr>
+            <label>Lütfen oluşturmak istediğiniz siparişe ilişkin aşağıdaki bilgileri doldurunuz;</label>
+            <h2>Kişisel Bilgiler</h2>
+            <div class="input-group">
+                <label for="ad">Adınız:</label>
+                <input type="text" name="ad" id="ad">
+            </div>
+            <div class="input-group">
+                <label for="soyad">Soyadınız:</label>
+                <input type="text" name="soyad" id="soyad">
+            </div>
+            <div class="input-group">
+                <label for="dogum">Doğum Tarihiniz:</label>
+                <input type="date" name="dogum" id="dogum">
+            </div>
+            <div class="input-group">
+                <label for="email">Mail Adresiniz:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="input-group">
+                <label for="telefon">Telefon:</label>
+                <input type="tel" name="telefon" id="telefon">
+            </div>
+            <hr>
+            <h2>Sipariş Bilgileri</h2>
+            <div class="input-group2">
+                <label for="tisort">Tişört Rengi:</label>
+                <input type="color" name="tisort" id="tisort" style="width: 50px;" >
+            </div>
+            <div class="input-group2">
+                <label for="yazi">Yazı Rengi:</label>
+                <input type="color" name="yazi" id="yazi" style="width: 50px;">
+            </div>
+            <div class="input-group">
+                <label for="tyazi">Tişört üzerinde yazacak yazıyı girin:</label>
+                <input type="text" name="tyazi" id="tyazi">
+            </div>
+            <div class="input-group">
+                <label for="tadet">Tişört Adeti:</label>
+                <input type="number" name="tadet" id="tadet">
+            </div>
+            <div class="input-group">
+                <label for="tbeden">Tişört Bedeni:</label>
+                <input type="range" name="tbeden" id="tbeden" min="0" max="5" step="1" oninput="gosterBeden()">
+                <br>
+                <input type="button" value="Seç" onclick="bedenSec()" style="width: 100px; font-size: 12px;">
+                <input type="text" id="secilenBedenTextbox" readonly style="width: auto;">
+            </div>
+            <hr>
+            <h2>Teslimat Bilgileri</h2>
+            <div class="input-group">
+                <label for="adres">Adres:</label>
+                <input type="text" name="adres">
+            </div>
+            <div class="input-group">
+                <label for="teslim_tarihi">Teslim tarihi için bir aralık seçiniz:</label>
+                <input type="date" name="teslim_tarihi">
+            </div>
+           
+            
+            <hr>
+            <h2>Ödeme Bilgileri</h2>
+            <div class="input-group">
+                <label for="ad_soyad">Ad Soyad:</label>
+                <input type="text" name="ad_soyad">
+            </div>
+            <div class="input-group">
+                <label for="kart_numarasi">Kart Numarası:</label>
+                <input type="tel" id="cardNumber" name="kart_numarasi" placeholder="XXXX XXXX XXXX XXXX" maxlength="16" pattern="[0-9]{16}" required>
+            </div>
+            <div class="input-group">
+                <label for="son_kullanma_tarihi">Son Kullanma Tarihi:</label>
+                <input type="month" name="son_kullanma_tarihi">
+            </div>
+            <div class="input-group">
+                <label for="cvv">CVV:</label>
+                <input type="number" name="cvv" maxlength="3" pattern="[0-9]{3}" required>
+            </div>
+            <input type="submit" value="Onayla" onclick="onayla()">
+        </form>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <th colspan="3">SİPARİŞ ONAY</th>
+        </tr>
+        <tr>
+            <th rowspan="5">Kişisel Bilgileri</th>
+            <td>Ad:</td>
+            <td ><span id="tbl_ad" ></span></td>
+        </tr>
+        <tr>
+            <td>Soyad:</td>
+            <td><span id="tbl_soyad"></span></td>
+        </tr>
+        <tr>
+            <td>Doğum Tarihi:</td>
+            <td><span id="tbl_dogum"></span></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><span id="tbl_email"></span></td>
+        </tr>
+        <tr>
+            <td>Telefon:</td>
+            <td><span id="tbl_telefon"></span></td>
+        </tr>
+        <tr>
+            <th rowspan="5">Sipariş Bilgileri</th>
+            <td>Tshirt Rengi:</td>
+            <td><span id="tbl_tisort"></span></td>
+        </tr>
+        <tr>
+            <td>Yazı Rengi:</td>
+            <td><span id="tbl_yazi"></span></td>
+        </tr>
+        <tr>
+            <td>Yazı:</td>
+            <td><span id="tbl_tyazi"></span></td>
+        </tr>
+        <tr>
+            <td>Tshirt Adeti:</td>
+            <td><span id="tbl_tadet"></span></td>
+        </tr>
+        <tr>
+            <td>Tshirt Bedeni:</td>
+            <td><span id="tbl_tbeden"></span></td>
+        </tr>
+        <tr>
+            <th rowspan="2">Teslimat Bilgileri</th>
+            <td>Adres:</td>
+            <td><span id="tbl_adres"></span></td>
+        </tr>
+        <tr>
+            <td>Teslim Tarihi:</td>
+            <td><span id="tbl_teslim_tarihi"></span></td>
+        </tr>
+        <tr>
+            <th rowspan="4">Ödeme Bilgileri</th>
+            <td>Ad Soyad:</td>
+            <td><span id="tbl_ad_soyad"></span></td>
+        </tr>
+        <tr>
+            <td>Kart Numarası:</td>
+            <td><span id="tbl_kart_numarasi"></span></td>
+        </tr>
+        <tr>
+            <td>Son Kullanma Tarihi:</td>
+            <td><span id="tbl_son_kullanma_tarihi"></span></td>
+        </tr>
+        <tr>
+            <td>CVV:</td>
+            <td><span id="tbl_cvv"></span></td>
+        </tr>
+    </table>
+    <br>
+    <input type="reset" value="Tamamla" form="reset">
+    <script>
+       
+            function onayla(){
+            var ad = document.getElementById("ad").value;
+            var soyad = document.getElementById("soyad").value;
+            var dogum = document.getElementById("dogum").value;
+            var email = document.getElementById("email").value;
+            var telefon = document.getElementById("telefon").value;
+            var tisort = document.getElementById("tisort").value;
+            var yazi = document.getElementById("yazi").value;
+            var tyazi = document.getElementById("tyazi").value;
+            var tadet = document.getElementById("tadet").value;
+            var adres = document.getElementsByName("adres")[0].value;
+            var teslim_tarihi = document.getElementsByName("teslim_tarihi")[0].value;
+            var ad_soyad = document.getElementsByName("ad_soyad")[0].value;
+            var kart_numarasi = document.getElementsByName("kart_numarasi")[0].value;
+            var son_kullanma_tarihi = document.getElementsByName("son_kullanma_tarihi")[0].value;
+            var cvv = document.getElementsByName("cvv")[0].value;
+            
+            
+            document.querySelector("#tbl_ad").textContent = ad;
+            document.querySelector("#tbl_soyad").textContent = soyad;
+            document.querySelector("#tbl_dogum").textContent = dogum;
+            document.querySelector("#tbl_email").textContent = email;
+            document.querySelector("#tbl_telefon").textContent = telefon;
+            document.querySelector("#tbl_tisort").textContent = tisort;
+            document.querySelector("#tbl_yazi").textContent = yazi;
+            document.querySelector("#tbl_tyazi").textContent = tyazi;
+            document.querySelector("#tbl_tadet").textContent = tadet;
+            document.querySelector("#tbl_adres").textContent = adres;
+            document.querySelector("#tbl_teslim_tarihi").textContent = teslim_tarihi;
+            document.querySelector("#tbl_ad_soyad").textContent = ad_soyad;
+            document.querySelector("#tbl_kart_numarasi").textContent = kart_numarasi;
+            document.querySelector("#tbl_son_kullanma_tarihi").textContent = son_kullanma_tarihi;
+            document.querySelector("#tbl_cvv").textContent = cvv;
+            }
+        function gosterBeden() {
+        var tişörtBedenleri = ["XS", "S", "M", "L", "XL"];
+        var tbedenInput = document.getElementById("tbeden");
+        var secilenBedenIndex = tbedenInput.value;
+        var secilenBeden = tişörtBedenleri[secilenBedenIndex];
+        document.getElementById("secilenBedenTextbox").value = secilenBeden;
+    }
+
+    function bedenSec() {
+        var tbedenInput = document.getElementById("tbeden");
+        var secilenBedenIndex = tbedenInput.value;
+        var tişörtBedenleri = ["XS", "S", "M", "L", "XL"];
+        var secilenBeden = tişörtBedenleri[secilenBedenIndex];
+        document.getElementById("tbl_tbeden").textContent = secilenBeden;
+    }
+
+    </script>
+
+</body>
+</html>
